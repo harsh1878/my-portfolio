@@ -1,0 +1,83 @@
+/* css/variables.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  /* Color System - Dark Mode (Default) */
+  --bg-color: #07070b;
+  --surface-color: #111116;
+  --glass-bg: rgba(255, 255, 255, 0.035);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --text-primary: #f4f4f7;
+  --text-secondary: #9a9aa6;
+  --accent-color: #6e5bff;
+  --accent-color-2: #b36bff;
+  --accent-glow: rgba(110, 91, 255, 0.18);
+  --gradient-accent: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-color-2) 100%);
+  --noise-opacity: 0.035;
+
+  /* Typography */
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 8rem;
+  --section-padding: 8rem 0;
+
+  /* Elevations */
+  --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 8px 40px var(--accent-glow);
+
+  /* Radius Scale */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  /* Animations & Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Header Height */
+  --header-height: 80px;
+}
+
+[data-theme="light"] {
+  /* Color System - Light Mode */
+  --bg-color: #fbfbfd;
+  --surface-color: #f1f1f6;
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(17, 17, 26, 0.08);
+  --text-primary: #14141a;
+  --text-secondary: #63636d;
+  --accent-color: #5b3df0;
+  --accent-color-2: #9b4de0;
+  --accent-glow: rgba(91, 61, 240, 0.14);
+
+  /* Elevations */
+  --shadow-sm: 0 4px 20px rgba(20, 20, 30, 0.06);
+  --shadow-md: 0 8px 30px rgba(20, 20, 30, 0.08);
+  --shadow-lg: 0 20px 60px rgba(20, 20, 30, 0.12);
+  --shadow-glow: 0 8px 40px var(--accent-glow);
+
+  --noise-opacity: 0.02;
+}
+
+/* Base sizing for better REM scaling */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 5rem 0;
+    --space-xl: 5rem;
+    --space-lg: 3rem;
+  }
+}
