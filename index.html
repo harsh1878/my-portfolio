@@ -6,11 +6,8 @@
   <meta name="description" content="Harsh Chhasatiya - Premium Full-Stack Developer Portfolio">
   <title>Harsh Chhasatiya | Full-Stack Developer</title>
   
-  <!-- Preconnect to Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  
-  <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
@@ -20,11 +17,10 @@
 </head>
 <body class="stagger-container">
 
-  <!-- ==================== HEADER ==================== -->
   <header class="header">
     <div class="container header-container">
       <a href="#" class="logo reveal active">
-        <img src="assets/icons/hc.png" alt="HC Logo" class="nav-logo">
+        <img src="assets/images/hc.png" alt="HC Logo" class="nav-logo">
       </a>
       
       <div class="mobile-toggle reveal active stagger-1" id="mobile-toggle">
@@ -52,11 +48,10 @@
     </div>
   </header>
 
-  <!-- ==================== HERO ==================== -->
   <section class="hero" id="home">
     <div class="hero-video-wrapper">
-      <!-- JS handles responsive source loading -->
-      <video class="hero-video" loop playsinline preload="auto" muted></video>
+      <img src="assets/images/full.jpg" alt="Fallback Portfolio Image" class="hero-fallback-img" id="hero-fallback-img">
+      <video class="hero-video" id="hero-video" loop playsinline preload="auto"></video>
       <div class="hero-gradient"></div>
     </div>
     
@@ -75,7 +70,6 @@
     </div>
   </section>
 
-  <!-- ==================== ABOUT ==================== -->
   <section class="section" id="about">
     <div class="container">
       <div class="section-header reveal">
@@ -157,7 +151,6 @@
     </div>
   </section>
 
-  <!-- ==================== WORK ==================== -->
   <section class="section" id="work">
     <div class="container">
       <div class="section-header reveal">
@@ -165,7 +158,6 @@
         <p class="section-subtitle">Client and personal projects</p>
       </div>
       
-      <!-- Featured Centerpiece -->
       <div class="featured-project reveal-scale">
         <h3 style="font-size: 2rem; margin-bottom: 1rem; font-family: var(--font-display);">indradeveloper</h3>
         <p class="text-secondary" style="margin-bottom: 1.5rem; max-width: 600px;">
@@ -173,7 +165,6 @@
         </p>
         
         <div class="mockup-container">
-          <!-- REPLACE with actual mockup image -->
           <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1600&q=80" alt="indradeveloper mockup showcase" class="mockup-image" loading="lazy">
         </div>
         
@@ -185,7 +176,6 @@
       
       <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; margin-top: 4rem;" class="reveal">Personal Projects</h3>
       <div class="project-grid">
-        <!-- Project 1 -->
         <div class="project-card glass-card reveal">
           <div class="project-img-wrap">
             <img src="https://images.unsplash.com/photo-1566232392379-afd9298e6a46?auto=format&fit=crop&w=800&q=80" alt="Toy Shop Management System" class="project-img" loading="lazy">
@@ -202,7 +192,6 @@
           </div>
         </div>
         
-        <!-- Project 2 -->
         <div class="project-card glass-card reveal">
           <div class="project-img-wrap">
             <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80" alt="Maid Management System" class="project-img" loading="lazy">
@@ -218,7 +207,6 @@
           </div>
         </div>
 
-        <!-- Project 3 -->
         <div class="project-card glass-card reveal">
           <div class="project-img-wrap">
             <img src="assets/images/My-Portfolio.jpeg" alt="Portfolio Website" class="project-img" loading="lazy">
@@ -238,7 +226,6 @@
     </div>
   </section>
 
-  <!-- ==================== SERVICES ==================== -->
   <section class="section" id="services">
     <div class="container">
       <div class="section-header reveal">
@@ -292,7 +279,6 @@
     </div>
   </section>
 
-  <!-- ==================== SKILLS ==================== -->
   <section class="section" id="skills">
     <div class="container">
       <div class="section-header reveal">
@@ -373,7 +359,6 @@
     </div>
   </section>
 
-  <!-- ==================== EXPERIENCE ==================== -->
   <section class="section" id="experience">
     <div class="container">
       <div class="section-header reveal">
@@ -382,7 +367,6 @@
       </div>
       
       <div class="resume-grid">
-        <!-- Education Column -->
         <div class="resume-column reveal-left">
           <h3>Education</h3>
           <div class="glass-card" style="margin-bottom: var(--space-md);">
@@ -398,8 +382,7 @@
             </div>
           </div>
         </div>
-        
-        <!-- Experience Column -->
+  
         <div class="resume-column reveal-right">
           <h3>Experience</h3>
           <div class="glass-card">
@@ -428,7 +411,6 @@
     </div>
   </section>
 
-  <!-- ==================== CONTACT ==================== -->
   <section class="section" id="contact">
     <div class="container">
       <div class="section-header reveal">
@@ -513,7 +495,6 @@
     </div>
   </section>
 
-  <!-- ==================== FOOTER ==================== -->
   <footer class="footer">
     <div class="container footer-container">
       <div class="footer-text">
@@ -527,7 +508,6 @@
     </div>
   </footer>
 
-  <!-- Floating Sound Toggle Button -->
   <button id="sound-toggle" class="sound-toggle" aria-label="Toggle Video Sound">
     <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
@@ -540,7 +520,6 @@
     </svg>
   </button>
 
-  <!-- Scripts as ES Module -->
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
