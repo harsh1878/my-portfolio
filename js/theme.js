@@ -1,9 +1,4 @@
-// js/theme.js
-
 export function initTheme() {
-
-  // ─── 1. RESOLVE INITIAL THEME ─────────────────────────────────────────────
-  // Priority: localStorage → system preference → dark (default)
 
   const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)');
   const savedTheme         = localStorage.getItem('theme');
@@ -12,10 +7,8 @@ export function initTheme() {
     ? savedTheme
     : systemPrefersLight.matches ? 'light' : 'dark';
 
-  applyTheme(currentTheme, false); // false = no transition on first load
+  applyTheme(currentTheme, false);
 
-
-  // ─── 2. INJECT STYLES ─────────────────────────────────────────────────────
   injectStyle(`
     /* Smooth cross-fade for all colour tokens */
     :root {
@@ -112,11 +105,8 @@ export function initTheme() {
     }
   `, 'theme-styles');
 
-
-  // ─── 3. INJECT SVG ICONS INTO BUTTON ──────────────────────────────────────
   const btn = document.getElementById('theme-toggle');
   if (btn) {
-    // Only inject if the button doesn't already have custom inner content
     if (!btn.querySelector('.icon-sun')) {
       btn.innerHTML = `
         <span class="icon-sun" aria-hidden="true">
@@ -145,19 +135,14 @@ export function initTheme() {
     updateButtonTooltip(btn, currentTheme);
   }
 
-
-  // ─── 4. RIPPLE ELEMENT ────────────────────────────────────────────────────
   const ripple = document.createElement('div');
   ripple.id = 'theme-ripple';
   document.body.appendChild(ripple);
 
-
-  // ─── 5. TOGGLE ON CLICK ───────────────────────────────────────────────────
   if (btn) {
     btn.addEventListener('click', (e) => {
       const next = currentTheme === 'dark' ? 'light' : 'dark';
 
-      // Position ripple at the button's centre
       const rect = btn.getBoundingClientRect();
       const cx   = rect.left + rect.width  / 2;
       const cy   = rect.top  + rect.height / 2;
@@ -169,18 +154,15 @@ export function initTheme() {
       ripple.style.marginTop  = `-${parseFloat(ripple.style.height) / 2}px`;
       ripple.style.background = next === 'light' ? '#ffffff' : '#0a0a0f';
 
-      // Trigger ripple
       ripple.classList.remove('expanding');
-      void ripple.offsetWidth; // force reflow
+      void ripple.offsetWidth;
       ripple.classList.add('expanding');
 
-      // Spin the button
       btn.classList.remove('spinning');
       void btn.offsetWidth;
       btn.classList.add('spinning');
       btn.addEventListener('animationend', () => btn.classList.remove('spinning'), { once: true });
 
-      // Apply theme with cross-fade transition
       applyTheme(next, true);
       currentTheme = next;
       localStorage.setItem('theme', next);
@@ -188,25 +170,14 @@ export function initTheme() {
     });
   }
 
-
-  // ─── 6. SYNC WITH SYSTEM PREFERENCE CHANGES ──────────────────────────────
-  // If the user hasn't manually chosen a theme, follow OS changes live.
   systemPrefersLight.addEventListener('change', (e) => {
-    if (localStorage.getItem('theme')) return; // user preference wins
+    if (localStorage.getItem('theme')) return;
     const next = e.matches ? 'light' : 'dark';
     applyTheme(next, true);
     currentTheme = next;
     if (btn) updateButtonTooltip(btn, next);
   });
 
-
-  // ─── HELPERS ──────────────────────────────────────────────────────────────
-
-  /**
-   * Apply a theme, optionally wrapping in a CSS cross-fade transition.
-   * @param {'light'|'dark'} theme
-   * @param {boolean} animate
-   */
   function applyTheme(theme, animate) {
     if (animate) {
       document.documentElement.classList.add('theme-transitioning');
@@ -221,21 +192,18 @@ export function initTheme() {
       document.documentElement.removeAttribute('data-theme');
     }
 
-    // Keep <meta theme-color> in sync for mobile browser chrome
     const metaTheme = document.querySelector('meta[name="theme-color"]');
     if (metaTheme) {
       metaTheme.content = theme === 'light' ? '#ffffff' : '#0a0a0f';
     }
   }
 
-  /** Update aria-label and tooltip text to reflect the *next* state. */
   function updateButtonTooltip(btn, currentTheme) {
     const label = currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
     btn.setAttribute('aria-label',    label);
     btn.setAttribute('data-tooltip',  label);
   }
 
-  /** Inject a <style> tag once, keyed by id. */
   function injectStyle(css, id) {
     if (document.getElementById(id)) return;
     const tag = document.createElement('style');
