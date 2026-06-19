@@ -1,36 +1,55 @@
-// js/main.js
 import { initTheme } from './theme.js';
 import { initAnimations } from './animations.js';
 import { initForm } from './form.js';
 import { initVideo } from './video.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize Modules
   initTheme();
   initAnimations();
   initForm();
   initVideo();
-  
-  // Mobile Menu Toggle Logic
-  const mobileToggle = document.getElementById('mobile-toggle');
-  const navLinks = document.getElementById('nav-links');
-  
-  if (mobileToggle && navLinks) {
-    mobileToggle.addEventListener('click', () => {
-      mobileToggle.classList.toggle('open');
-      navLinks.classList.toggle('open');
-    });
-    
-    // Close menu when clicking a link
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileToggle.classList.remove('open');
-        navLinks.classList.remove('open');
-      });
-    });
-  }
 
-  // Active section highlighting based on scroll position
+const mobileToggle = document.getElementById('mobile-toggle');
+const navLinks = document.getElementById('nav-links');
+
+function closeMobileMenu() {
+  mobileToggle.classList.remove('open');
+  navLinks.classList.remove('open');
+  document.body.classList.remove('menu-open');
+}
+
+function openMobileMenu() {
+  mobileToggle.classList.add('open');
+  navLinks.classList.add('open');
+  document.body.classList.add('menu-open');
+}
+
+if (mobileToggle && navLinks) {
+  mobileToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.contains('open');
+    isOpen ? closeMobileMenu() : openMobileMenu();
+  });
+
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
+  });
+
+  document.addEventListener('click', (e) => {
+    const isOpen = navLinks.classList.contains('open');
+    const clickedInsideMenu = navLinks.contains(e.target);
+    const clickedToggle = mobileToggle.contains(e.target);
+    if (isOpen && !clickedInsideMenu && !clickedToggle) {
+      closeMobileMenu();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+      closeMobileMenu();
+    }
+  });
+}
+
   const sections = document.querySelectorAll('section[id]');
   
   window.addEventListener('scroll', () => {
