@@ -1,14 +1,7 @@
-// js/animations.js
-
 export function initAnimations() {
 
-  // ─── 1. REDUCED MOTION GATE ───────────────────────────────────────────────
-  // Respect the user's OS-level "reduce motion" preference everywhere.
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-
-  // ─── 2. SCROLL PROGRESS BAR ───────────────────────────────────────────────
-  // Thin line at the very top of the viewport that fills as the user scrolls.
   const progressBar = document.createElement('div');
   progressBar.id = 'scroll-progress';
   Object.assign(progressBar.style, {
@@ -24,10 +17,6 @@ export function initAnimations() {
   });
   document.body.prepend(progressBar);
 
-
-  // ─── 3. MAGNETIC CURSOR ───────────────────────────────────────────────────
-  // A custom cursor dot that slightly lags behind the mouse and snaps ("sticks")
-  // to buttons / links on hover — a hallmark of premium portfolio sites.
   let cursor, cursorRing;
 
   if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
@@ -74,7 +63,6 @@ export function initAnimations() {
       cursorRing.style.top  = `${my}px`;
     });
 
-    // Magnetic snap: enlarge ring + shrink dot on interactive elements
     const magnetTargets = 'a, button, [data-magnetic], input, textarea, label';
     document.addEventListener('mouseover', (e) => {
       if (e.target.closest(magnetTargets)) {
@@ -93,7 +81,6 @@ export function initAnimations() {
       }
     });
 
-    // Hide while mouse is outside the window
     document.addEventListener('mouseleave', () => {
       cursor.style.opacity = cursorRing.style.opacity = '0';
     });
@@ -103,18 +90,12 @@ export function initAnimations() {
     });
   }
 
-
-  // ─── 4. STAGGERED REVEAL WITH CUSTOM EASING ──────────────────────────────
-  // Each .reveal* element slides + fades in. Siblings inside the same parent
-  // get a cascading delay so they arrive one after another.
-
   const revealObserver = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
 
       const el = entry.target;
 
-      // Stagger siblings: count position among observed siblings
       const siblings = [...(el.parentElement?.children || [])].filter(
         c => c.classList.contains('reveal') ||
              c.classList.contains('reveal-left') ||
@@ -129,19 +110,14 @@ export function initAnimations() {
       obs.unobserve(el);
     });
   }, {
-    root:       null,
-    rootMargin: '-5% 0px -5% 0px',
-    threshold:  0.12,
+   root:       null,
+    rootMargin: '0px 0px -10% 0px', 
+    threshold:  0,
   });
 
   document.querySelectorAll(
     '.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-blur'
   ).forEach(el => revealObserver.observe(el));
-
-
-  // ─── 5. SPLIT-TEXT HERO HEADLINE ─────────────────────────────────────────
-  // Wraps each word in a <span> and animates them in with a cinematic stagger.
-  // Targets any element with [data-split] or .hero-title.
 
   if (!prefersReducedMotion) {
     document.querySelectorAll('[data-split], .hero-title').forEach(el => {
@@ -160,7 +136,6 @@ export function initAnimations() {
         ">${w}</span></span>${i < words.length - 1 ? ' ' : ''}`
       ).join('');
 
-      // Trigger on next paint so CSS picks up the initial state
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           el.querySelectorAll('.split-word span').forEach(span => {
@@ -172,11 +147,6 @@ export function initAnimations() {
     });
   }
 
-
-  // ─── 6. HEADER SCROLL + HIDE-ON-SCROLL-DOWN ──────────────────────────────
-  // Header shrinks after 50 px and hides when scrolling down fast,
-  // reappears immediately when the user scrolls back up.
-
   const header = document.querySelector('.header');
   let lastScrollY   = 0;
   let ticking       = false;
@@ -184,15 +154,12 @@ export function initAnimations() {
   function onScroll() {
     const scrollY = window.scrollY;
 
-    // Scroll progress bar
     const docH = document.documentElement.scrollHeight - window.innerHeight;
     progressBar.style.width = docH > 0 ? `${(scrollY / docH) * 100}%` : '0%';
 
-    // Header state
     if (header) {
       header.classList.toggle('scrolled', scrollY > 50);
 
-      // Hide on scroll-down (> 80 px from top), show on scroll-up
       if (scrollY > 80) {
         if (scrollY > lastScrollY + 4) {
           header.classList.add('header--hidden');
@@ -204,14 +171,14 @@ export function initAnimations() {
       }
     }
 
-    // Parallax hero video
-    const heroSection = document.querySelector('.hero');
-    if (heroSection && scrollY < heroSection.offsetHeight * 1.2) {
-      const heroVideo = document.querySelector('.hero-video');
-      if (heroVideo && !prefersReducedMotion) {
-        heroVideo.style.transform = `translateY(${scrollY * 0.35}px)`;
-      }
-    }
+const heroSection = document.querySelector('.hero');
+const isSmallScreen = window.innerWidth <= 768;
+if (heroSection && scrollY < heroSection.offsetHeight * 1.2) {
+  const heroVideo = document.querySelector('.hero-video');
+  if (heroVideo && !prefersReducedMotion && !isSmallScreen) {
+    heroVideo.style.transform = `translateY(${scrollY * 0.35}px)`;
+  }
+}
 
     lastScrollY = scrollY;
     ticking = false;
@@ -224,7 +191,6 @@ export function initAnimations() {
     }
   }, { passive: true });
 
-  // Inject the CSS rule for header hide transition once
   injectStyle(`
     .header {
       transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
@@ -236,8 +202,6 @@ export function initAnimations() {
     }
   `, 'header-scroll-style');
 
-
-  // ─── 7. SMOOTH SCROLL WITH MOMENTUM ─────────────────────────────────────
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
@@ -253,10 +217,6 @@ export function initAnimations() {
       window.scrollTo({ top: targetPosition, behavior: 'smooth' });
     });
   });
-
-
-  // ─── 8. COUNTER ANIMATION WITH EASING ────────────────────────────────────
-  // easeOutExpo curve makes the number accelerate then decelerate naturally.
 
   function easeOutExpo(t) {
     return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
@@ -289,10 +249,6 @@ export function initAnimations() {
   const statsContainer = document.querySelector('.stats-container');
   if (statsContainer) statsObserver.observe(statsContainer);
 
-
-  // ─── 9. TILT CARDS ───────────────────────────────────────────────────────
-  // 3-D perspective tilt on .card--tilt elements — subtle, not gimmicky.
-
   if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
     document.querySelectorAll('.card--tilt, .glass-card').forEach(card => {
       card.style.transition = 'transform 0.1s ease, box-shadow 0.3s ease';
@@ -304,7 +260,7 @@ export function initAnimations() {
         const cy     = rect.top  + rect.height / 2;
         const dx     = (e.clientX - cx) / (rect.width  / 2);
         const dy     = (e.clientY - cy) / (rect.height / 2);
-        const rotX   = dy * -6;   // max ±6 deg
+        const rotX   = dy * -6;
         const rotY   = dx *  6;
         card.style.transform = `perspective(700px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
       });
@@ -315,10 +271,6 @@ export function initAnimations() {
       });
     });
   }
-
-
-  // ─── 10. SECTION ACTIVE NAV HIGHLIGHT ────────────────────────────────────
-  // Marks the matching nav link as .active as the user scrolls past each section.
 
   const sections  = document.querySelectorAll('section[id]');
   const navLinks  = document.querySelectorAll('.nav a[href^="#"]');
@@ -343,10 +295,6 @@ export function initAnimations() {
     sections.forEach(s => navObserver.observe(s));
   }
 
-
-  // ─── UTILITY ─────────────────────────────────────────────────────────────
-
-  /** Inject a <style> tag once, keyed by id so re-runs are idempotent. */
   function injectStyle(css, id) {
     if (document.getElementById(id)) return;
     const tag = document.createElement('style');
