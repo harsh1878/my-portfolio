@@ -1,4 +1,3 @@
-/* css/reset.css */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -7,6 +6,8 @@
 
 html {
   -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -21,7 +22,6 @@ body {
   position: relative;
 }
 
-/* Subtle film-grain texture — gives flat dark surfaces a tactile, premium finish */
 body::before {
   content: '';
   position: fixed;
@@ -65,13 +65,11 @@ button {
   cursor: pointer;
 }
 
-/* Text selection */
 ::selection {
   background-color: var(--accent-color);
   color: #fff;
 }
 
-/* Custom scrollbar */
 html {
   scrollbar-color: var(--accent-color) transparent;
   scrollbar-width: thin;
@@ -91,14 +89,12 @@ html {
   border: 2px solid var(--bg-color);
 }
 
-/* Keyboard accessibility */
 :focus-visible {
   outline: 2px solid var(--accent-color);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-/* Base utility classes */
 .container {
   width: 100%;
   max-width: 1280px;
@@ -119,7 +115,6 @@ html {
   color: var(--text-secondary);
 }
 
-/* Gradient text utility — reserved for key emphasis (numerals, logo mark, headline accents) */
 .text-gradient {
   background-image: var(--gradient-accent);
   background-clip: text;
@@ -128,7 +123,19 @@ html {
   color: transparent;
 }
 
-/* Accessibility */
+.about-grid > *,
+.resume-grid > *,
+.contact-grid > *,
+.project-grid > *,
+.services-grid > *,
+.skills-grid > * {
+  min-width: 0;
+}
+
+iframe {
+  max-width: 100%;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -138,5 +145,11 @@ html {
   }
   body::before {
     display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1.25rem;
   }
 }
