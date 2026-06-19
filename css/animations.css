@@ -1,6 +1,3 @@
-/* css/animations.css */
-
-/* Global Reveal Classes (Triggered by IntersectionObserver) */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -53,7 +50,6 @@
 .stagger-4 { transition-delay: 0.4s; }
 .stagger-5 { transition-delay: 0.5s; }
 
-/* Remove delays once animation completes so hover effects aren't delayed */
 .reveal.active.stagger-1,
 .reveal.active.stagger-2,
 .reveal.active.stagger-3,
@@ -62,7 +58,6 @@
   transition-delay: 0s;
 }
 
-/* Keyframes */
 @keyframes float {
   0% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
@@ -75,20 +70,17 @@
   100% { box-shadow: 0 0 0 0 transparent; }
 }
 
-/* Animates the background-position of elements using --gradient-accent */
 @keyframes gradient-shift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* Diagonal light sweep, used for shine/skeleton effects */
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
 
-/* Slow ambient drift for the hero's aurora glow layer */
 @keyframes aurora-drift {
   0% { transform: translate(0, 0) scale(1); }
   50% { transform: translate(3%, -4%) scale(1.08); }
@@ -117,4 +109,22 @@
 @keyframes scrollWheel {
   0% { opacity: 1; transform: translateY(0); }
   100% { opacity: 0; transform: translateY(15px); }
+}
+
+@media (max-width: 768px) {
+  .reveal,
+  .reveal-left,
+  .reveal-right,
+  .reveal-scale {
+    transition-duration: 0.5s;
+  }
+}
+
+@media (max-width: 480px) {
+  .reveal:not(.active),
+  .reveal-left:not(.active),
+  .reveal-right:not(.active),
+  .reveal-scale:not(.active) {
+    opacity: 0.001;
+  }
 }
