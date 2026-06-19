@@ -1,9 +1,6 @@
-/* css/sections.css */
-
-/* Hero Section */
 .hero {
-  height: 100vh;
-  min-height: 600px;
+  min-height: 100vh;
+  min-height: 100dvh;
   position: relative;
   display: flex;
   align-items: center;
@@ -18,16 +15,31 @@
   width: 100%;
   height: 100%;
   z-index: -2;
+  background-color: var(--bg-color);
+}
+
+.hero-fallback-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  display: none;
 }
 
 .hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   pointer-events: none;
+  z-index: 2;
 }
 
-/* Ambient aurora wash over the video — the page's signature moment */
 .hero::after {
   content: '';
   position: absolute;
@@ -82,7 +94,7 @@
 .hero-title {
   font-size: clamp(3rem, 8vw, 6rem);
   margin-bottom: var(--space-sm);
-  color: #fff; /* Keep white over video regardless of theme */
+  color: #fff;
   text-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
   letter-spacing: -0.03em;
 }
@@ -141,7 +153,6 @@
   height: 100%;
 }
 
-/* Common Section Headers */
 .section-header {
   margin-bottom: var(--space-lg);
 }
@@ -166,10 +177,9 @@
   color: var(--text-secondary);
 }
 
-/* About Section */
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
   gap: var(--space-lg);
   align-items: start;
 }
@@ -248,7 +258,6 @@
   color: var(--text-primary);
 }
 
-/* Projects Section */
 .featured-project {
   margin-bottom: var(--space-xl);
 }
@@ -284,7 +293,7 @@
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
   gap: var(--space-md);
 }
 
@@ -345,10 +354,9 @@
   padding-top: var(--space-sm);
 }
 
-/* Services Section */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
   gap: var(--space-md);
 }
 
@@ -389,10 +397,9 @@
   margin-bottom: 0.5rem;
 }
 
-/* Skills Section */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
   gap: var(--space-md);
 }
 
@@ -429,7 +436,6 @@
   box-shadow: var(--shadow-sm);
 }
 
-/* Experience Section */
 .resume-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -479,7 +485,6 @@
   margin-bottom: 0.5rem;
 }
 
-/* Contact Section */
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
@@ -524,7 +529,6 @@
   background-color: var(--surface-color);
 }
 
-/* Form Messages */
 .form-message {
   padding: 1rem;
   border-radius: var(--radius-sm);
@@ -550,9 +554,97 @@
   border-left: 3px solid #e74c3c;
 }
 
-/* Responsive Overrides */
-@media (max-width: 992px) {
-  .about-grid, .resume-grid, .contact-grid {
+@media (max-width: 768px) {
+  .hero-content {
+    max-width: 100%;
+    padding-right: var(--space-sm);
+  }
+
+  .hero-title {
+    font-size: clamp(2.2rem, 9vw, 3.5rem);
+    word-break: break-word;
+  }
+
+  .hero-tech-icons {
+    display: none;
+  }
+
+  .scroll-indicator {
+    bottom: var(--space-sm);
+  }
+
+  .hero-subtitle {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 600px) {
+  .project-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .project-actions .btn {
+    width: 100%;
+  }
+
+  .mockup-container {
+    aspect-ratio: 4/3;
+  }
+}
+
+@media (max-width: 600px) {
+  .service-card {
+    padding: 1.25rem;
+  }
+
+  .service-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .skill-list {
+    gap: 0.4rem;
+  }
+
+  .skill-pill {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.65rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    height: 160px !important;
+  }
+
+  .social-links-row {
+    gap: 1rem;
+  }
+
+  .social-icon-link {
+    width: 44px;
+    height: 44px;
+  }
+
+  .input-control {
+    padding: 0.875rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .resume-grid,
+  .contact-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .stats-container {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    padding: var(--space-sm);
   }
 }
